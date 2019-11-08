@@ -170,12 +170,14 @@ export default {
     },
     trigerModal(id){
       this.selectedId = id
+      console.log("masuk trigger", this.window.width)
       this.fetchSingle()
       if(this.window.width <= 500){
         this.hideDesktopModal()
         this.showMobileModal()
       }
       else{
+        console.log('makkan nasi')
         this.showDesktopModal()
         this.hideMobileModal()
       }
@@ -187,7 +189,7 @@ export default {
   },
   watch: {
     'window.width':function(){
-      if(this.window.width < 500){
+      if(this.window.width <= 500){
         this.hideDesktopModal()
       }
       else{
