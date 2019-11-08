@@ -33,7 +33,7 @@
           type="password"
           placeholder="Enter password"
         ></b-form-input>
-      <p class="mt-1"><small>Don't have an account? <span @click="toRegister()">Register here.</span> </small></p>
+      <p class="mt-1"><small>Don't have an account? <span style="cursor: pointer;" @click="toRegister()">Register here.</span> </small></p>
       </b-form-group>
 
 
@@ -47,6 +47,7 @@
 </template>
 
 <script>
+  import axios from '../config/axios'
   export default {
     data() {
       return {
@@ -61,7 +62,24 @@
     methods: {
       onSubmit(evt) {
         evt.preventDefault()
-        alert(JSON.stringify(this.form))
+        // alert(JSON.stringify(this.form))
+        axios({
+          method: 'POST',
+          url: '/users/login',
+          data: {
+            email: this.form.email,
+            password: this.form.password
+          }
+        })
+        .then(({ data })=> {
+          localStorage.setItem('token', data.token)
+          localStorage.setItem('name', data.name)
+          this.$swal('success', data.message, 'success')
+          this.loggedIn()
+        })
+        .catch(({ response }) => {
+          this.$swal('error', response.data.message, 'error')
+        })
       },
       onReset(evt) {
         evt.preventDefault()
@@ -77,6 +95,9 @@
       },
       toRegister(){
         this.$emit('toregister','register')
+      },
+      loggedIn () {
+        this.$emit('logged-in')
       }
     }
   }

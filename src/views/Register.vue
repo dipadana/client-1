@@ -33,7 +33,7 @@
         <b-form-input
           id="input-1"
           v-model="form.name"
-          type="email"
+          type="text"
           required
           placeholder="Enter name"
         ></b-form-input>
@@ -47,7 +47,7 @@
           type="password"
           placeholder="Enter password"
         ></b-form-input>
-      <p class="mt-1"><small>Have an account? <span @click="toLogin()">Login here.</span> </small></p>
+      <p class="mt-1"><small>Have an account? <span style="cursor: pointer;" @click="toLogin()">Login here.</span> </small></p>
       </b-form-group>
 
 
@@ -61,6 +61,7 @@
 </template>
 
 <script>
+import axios from '../config/axios'
   export default {
     data() {
       return {
@@ -75,7 +76,23 @@
     methods: {
       onSubmit(evt) {
         evt.preventDefault()
-        alert(JSON.stringify(this.form))
+        
+        axios({
+          method: 'POST',
+          url: `/users/register`,
+          data: {
+            email: this.form.email,
+            name: this.form.name,
+            password: this.form.password
+          }
+        })
+        .then(({ data })=> {
+          this.$swal('success', data.message, 'success')
+        })
+        .catch(({ response })=> {
+          this.$swal('error', response.data.message, 'error')
+        })
+
       },
       onReset(evt) {
         evt.preventDefault()
@@ -91,6 +108,9 @@
       },
       toLogin(){
         this.$emit('loginpage','login')
+      },
+      register () {
+        this.$emit('registered')
       }
     }
   }

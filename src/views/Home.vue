@@ -23,8 +23,10 @@
       :imglink="dataModal.imgLink"
       :username="dataModal.username"
       :quote="dataModal.quote"
+      :id="dataModal.id"
       :date="getFormatDate()"
       :commentdata="dataModal.commentdataa"
+      @updatemodal="fetchSingle"
     ></Desktopmodal>
   </b-modal>
 
@@ -34,8 +36,10 @@
       :imglink="dataModal.imgLink"
       :username="dataModal.username"
       :quote="dataModal.quote"
+      :id="dataModal.id"
       :date="getFormatDate()"
       :commentdata="dataModal.commentdataa"
+      @updatemodal="fetchSingle"
     ></Mobilemodal>
   </b-modal>
 
@@ -47,7 +51,7 @@ import Card from '../components/Card'
 import Desktopmodal from '../components/Desktopmodal'
 import Mobilemodal from '../components/Mobilemodal'
 import moment from 'moment'
-
+import axios from '../config/axios';
 export default {
   components:{
     Card,
@@ -60,32 +64,94 @@ export default {
         width: 0,
         height: 0
       },
+      selectedId: '',
       modalDesktopShow: false,
       modalMobileShow: false,
       datas: [],
       dataModal:{
-        imgLink: 'https://storage.googleapis.com/qmage/1573180391153-syahrini.jpg',
-        username: 'dipadana',
-        quote: "I love a lot of things, and I'm pretty much obsessive about most things I do, whether it be gardening, or architecture, or music. I'd be an obsessive hairdresser.",
-        date: "2019-11-08T02:33:15.649Z",
-        commentdataa: [
-    {
-      "_id": "5dc4d475c9b8600e5091ba5d",
-      "author": "panji",
-      "msg": "panji keren"
-    }
-  ]
+        imgLink: '',
+        username: '',
+        quote: '',
+        date: '',
+        commentdataa: [],
+        id:''
       }
     }
+  },
+  props: {
+    keyword: String
   },
   created() {
     window.addEventListener('resize', this.handleResize)
     this.handleResize();
+    if(this.keyword){
+      this.fetchContent(this.keyword)
+    } else {
+      this.fetchContent()
+    }
   },
   destroyed() {
     window.removeEventListener('resize', this.handleResize)
   },
   methods: {
+    
+    getId (id) {
+      this.selectedId = id
+      this.fetchSingle()
+    },
+    fetchSingle () {
+      const id = this.selectedId
+      axios({
+        method: 'GET',
+        url: `/contents/${id}`,
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+      .then(({ data })=> {
+        this.dataModal.imgLink = data.image
+        this.dataModal.username = data.userId.name
+        this.dataModal.quote = data.quote
+        this.dataModal.date = data.createdAt
+        this.dataModal.commentdataa = data.comments
+        this.dataModal.id = data._id
+      })
+      .catch(({ response })=> {
+        this.$swal('error', response.data, 'error')
+      })
+    },
+    fetchContent (tag) {
+      let query = ''
+      if(tag) query = `?tag=${tag}`
+      this.$swal.fire({
+              title: 'loading',
+              onOpen: ()=>{
+                this.$swal.showLoading()
+              }
+            })
+      axios({
+        method: 'GET',
+        url: `/contents${query}`,
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+      .then(({ data })=> {
+        if(data.length>0) {this.datas = data
+        
+        }
+        else {
+          this.$swal('error', 'No data found', 'error')
+        }
+        this.$swal.close()
+
+      })
+      .catch(({ response }) => {
+        this.$swal.close()
+        this.$swal('error', response.data, 'error')
+
+      })
+    },
     handleResize() {
       this.window.width = window.innerWidth;
       this.window.height = window.innerHeight;
@@ -102,7 +168,9 @@ export default {
     showMobileModal(){
       this.modalMobileShow = true
     },
-    trigerModal(){
+    trigerModal(id){
+      this.selectedId = id
+      this.fetchSingle()
       if(this.window.width <= 500){
         this.hideDesktopModal()
         this.showMobileModal()
@@ -125,6 +193,9 @@ export default {
       else{
         this.hideMobileModal()
       }
+    },
+    keyword () {
+      this.fetchContent(this.keyword)
     }
   }
 }

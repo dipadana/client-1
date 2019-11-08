@@ -24,7 +24,9 @@
                 </network>  
                 </div>
               </social-sharing>
-
+                <div style="cursor:pointer;" @click="deleteImage">
+                  <i  class="fas fa-trash"></i> delete
+                </div>
           <hr class="border-secondary"/>
           <!-- Comment Section Here -->
           <div style="margin-top:30px">
@@ -54,6 +56,7 @@
 </template>
 
 <script>
+import axios from '../config/axios'
 export default {
   name: "Mobilemodal",
   props:{
@@ -61,16 +64,49 @@ export default {
     quote: String,
     date: String,
     commentdata: Array,
-    imglink: String
+    imglink: String,
+    id: String
   },
   data(){
     return{
-      datacomment : 'alal'
+      datacomment : ''
     }
   },
   methods:{
+    deleteImage() {
+      axios({
+        method: 'DELETE',
+        url: `/contents/${this.id}`,
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+      .then(({ data }) => {
+        this.$swal('success', data.message, 'success')
+        this.$emit('refreshmyimage')
+      })
+      .catch(({ response })=> {
+        this.$swal('error', response.data, 'error')
+      })
+    },
     uploadComment(){
-      console.log(this.datacomment)
+      axios({
+        method: 'PATCH',
+        url: `/contents/${this.id}`,
+        headers: {
+          token: localStorage.getItem('token')
+        },
+        data: {
+          msg: this.datacomment
+        }
+      })
+      .then(({ data }) =>{
+        this.$swal('success', data.message, 'success')
+        this.$emit('updatemodal')
+      })
+      .catch(({ response })=> {
+        this.$swal('error', response.data, "error")
+      })
     }
   },
   created(){
