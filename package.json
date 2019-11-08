@@ -22,7 +22,8 @@
     "bootstrap": "^4.3.1",
     "bootstrap-vue": "^2.0.4",
     "vue": "^2.6.10",
-    "vue-hot-reload-api": "^2.3.4"
+    "vue-hot-reload-api": "^2.3.4",
+    "vue2-dropzone": "^3.6.0"
   },
   "devDependencies": {
     "@vue/component-compiler-utils": "^3.0.2",

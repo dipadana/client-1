@@ -1,32 +1,37 @@
 <template>
   <div>
-  
-    <Navbar></Navbar>
+    <Navbar @showupload="uploadImg"></Navbar>
 
-    <Home v-show="page == 'home'"></Home>
-
+    <Home v-show="page === 'home'"></Home>
+    <UploadForm v-show="page === 'upload'"></UploadForm>
   </div>
 </template>
 
 <script>
-import Navbar from './components/Navbar'
-import Home from './views/Home'
+import Navbar from "./components/Navbar";
+import Home from "./views/Home";
+import UploadForm from "./components/UploadForm";
 
 export default {
-  data(){
-    return{
-      page: 'home'
-    }
+  data() {
+    return {
+      page: "home"
+    };
   },
-  components:{
+  components: {
     Navbar,
-    Home
+    Home,
+    UploadForm
+  },
+  methods: {
+    uploadImg(arg) {
+      console.log("masuk");
+      this.page = arg;
+    }
   }
-}
+};
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=McLaren&display=swap')
-
-
+@import url("https://fonts.googleapis.com/css?family=McLaren&display=swap");
 </style>
