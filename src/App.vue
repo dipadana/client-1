@@ -1,10 +1,9 @@
 <template>
-  <div>
-    <Navbar @showupload="uploadImg"></Navbar>
+  <div id="homePage">
+    <Navbar @showupload="uploadImg" @backHome="showHome"></Navbar>
 
     <Home v-show="page == 'home'" class="mt-md-5 mt-4"></Home>
     <UploadForm v-show="page === 'upload'"></UploadForm>
-
   </div>
 </template>
 
@@ -26,11 +25,13 @@ export default {
   },
   methods: {
     uploadImg(arg) {
-      console.log("masuk");
+      this.page = arg;
+    },
+    showHome(arg) {
       this.page = arg;
     }
   }
 };
 </script>
-
-
+<style>
+</style>

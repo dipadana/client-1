@@ -1,8 +1,9 @@
 <template>
-  <div>
+  <div id="container">
+    <i class="fas fa-download fa-5x"></i>
     <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions"></vue-dropzone>
-    <button @click="removeAllFiles">Remove All Files</button>
-    <button @click="uploadFiles">Upload</button>
+    <button class="btn btn-danger" @click="removeAllFiles">Remove All Files</button>
+    <button class="btn btn-info" @click="uploadFiles">Upload</button>
   </div>
 </template>
 
@@ -20,7 +21,7 @@ export default {
         url: "http://localhost:3000/posts",
         method: "POST",
         autoProcessQueue: false,
-        thumbnailWidth: 150,
+        thumbnailWidth: 200,
         maxFilesize: 1,
         maxFiles: 1,
         headers: { "Content-Type": "multipart/form-data" }
@@ -39,4 +40,44 @@ export default {
 </script>
 
 <style>
+#container {
+  margin-top: 9%;
+  width: 50%;
+  margin-left: 25%;
+  margin-bottom: 1%;
+}
+#dropzone {
+  padding: 50px;
+  text-align: center;
+}
+#dropzone:hover {
+  border: dashed;
+}
+.fa-download {
+  position: absolute;
+  margin-left: 22%;
+  margin-top: 3%;
+}
+.btn {
+  margin-top: 3%;
+}
+.dz-message {
+  display: none;
+}
+
+@media only screen and (max-width: 600px) {
+  #container {
+    margin-top: 50%;
+    width: 70%;
+    margin-left: 15%;
+  }
+  .fa-download {
+    margin-left: 26%;
+    margin-top: 8%;
+  }
+  .dz-message {
+    padding-top: 90px;
+    padding-bottom: 0px;
+  }
+}
 </style>
