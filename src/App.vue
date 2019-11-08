@@ -2,8 +2,9 @@
   <div>
     <Navbar @showupload="uploadImg"></Navbar>
 
-    <Home v-show="page === 'home'"></Home>
+    <Home v-show="page == 'home'" class="mt-md-5 mt-4"></Home>
     <UploadForm v-show="page === 'upload'"></UploadForm>
+
   </div>
 </template>
 
@@ -32,6 +33,4 @@ export default {
 };
 </script>
 
-<style>
-@import url("https://fonts.googleapis.com/css?family=McLaren&display=swap");
-</style>
+

@@ -1,0 +1,39 @@
+@import 'node_modules/bootstrap/scss/bootstrap';
+@import 'node_modules/bootstrap-vue/src/index.scss';
+@import url('https://fonts.googleapis.com/css?family=Jomolhari|Ubuntu&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro&display=swap');
+
+.font-card-1{
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.font-card-2{
+  font-family: 'Open Sans', sans-serif;
+}
+
+.font-card-3{
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.modal-body{
+  padding: 0;
+}
+
+.modal-img-width{
+  width: 50vw;
+  max-width: 100%;
+}
+
+.comment-section{
+  height:73vh;
+}
+
+@media only screen and (min-width: 1785px) {
+  .modal-img-width{
+    width:36vw;
+  }
+  .comment-section{
+    height:58vh;
+  }
+}
+
