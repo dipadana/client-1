@@ -1,6 +1,7 @@
 <template>
+
   <div>
-    <Navbar v-show="loginStatus" @showupload="changePage"></Navbar>
+    <Navbar v-show="loginStatus" @showupload="changePage" @backHome="changePage"></Navbar>
     <Home v-show="page === 'home'" class="mt-md-5 mt-4"></Home>
     <UploadForm v-show="page === 'upload'"></UploadForm>
     <Login @toregister="changePage" v-show="page === 'login'"></Login>
@@ -31,6 +32,7 @@ export default {
     Register
   },
   methods: {
+
     changePage(arg) {
       console.log("masuk");
       this.page = arg;
@@ -38,5 +40,5 @@ export default {
   }
 };
 </script>
-
-
+<style>
+</style>
