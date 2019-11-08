@@ -4,58 +4,38 @@
   <b-card-group columns>
     
     <Card
-    username="theNyanNyan"
-    quote="You've gotta dance like there's nobody watching,
-            Love like you'll never be hurt,
-            Sing like there's nobody listening,
-            And live like it's heaven on earth"
-    :tags="['Love','Compassion']"
-    date="Wed, 29 May 2019"
-    linkSrc="https://placekitten.com/500/350"
-    @modal_trigger="trigerModal"
+    v-for="(data,index) in datas"
+    :key="index"
+    :username="data.author"
+    :quote="data.quote"
+    :tags="data.tags"
+    :date="data.createdAt"
+    :linkSrc="data.image"
+    @modal_trigger="trigerModal(data._id)"
+    @click="getId(data._id)"
     ></Card>
-
-    <Card
-    username="Dipadana"
-    quote="You know you're in love when you can't fall asleep because reality is finally better than your dreams."
-    :tags="['Love','Passion','Compassion']"
-    date="Sun, 19 May 2019"
-    linkSrc="https://placekitten.com/400/350"
-    @modal_trigger="trigerModal"
-    ></Card>
-
-    <Card
-    username="itJoel"
-    quote="I've learned that people will forget what you said, people will forget what you did, but people will never forget how you made them feel."
-    :tags="['Love','Passion','Compassion']"
-    date="Thurs, 9 May 2019"
-    linkSrc="https://placekitten.com/200/150"
-    @modal_trigger="trigerModal"
-    ></Card>
-    
-    
-
     
   </b-card-group>
 
   <!-- desktop modal -->
   <b-modal class="p-0" id="modal-xl" centered v-model="modalDesktopShow" size="xl" :hide-header="true" :hide-footer="true" title="Extra Large Modal">
     <Desktopmodal
-      :imglink="'https://placekitten.com/1000/1000'"
-      :username="'Dipadana'"
-      :quote="'Youve gotta dance like theres nobody watching,Love like youll never be hurt,Sing like theres nobody listening,And live like its heaven on earth'"
-      :date="'Wed, 20 January 2019'"
-      :commentdata="commentdataa"
+      :imglink="dataModal.imgLink"
+      :username="dataModal.username"
+      :quote="dataModal.quote"
+      :date="getFormatDate()"
+      :commentdata="dataModal.commentdataa"
     ></Desktopmodal>
   </b-modal>
 
   <!-- mobile modal -->
   <b-modal id="modal-scrollable" v-model="modalMobileShow" scrollable title="Comment" :hide-footer="true" centered>
     <Mobilemodal
-      :username="'Dipadana'"
-      :quote="'Youve gotta dance like theres nobody watching,Love like youll never be hurt,Sing like theres nobody listening,And live like its heaven on earth'"
-      :date="'Wed, 20 January 2019'"
-      :commentdata="commentdataa"
+      :imglink="dataModal.imgLink"
+      :username="dataModal.username"
+      :quote="dataModal.quote"
+      :date="getFormatDate()"
+      :commentdata="dataModal.commentdataa"
     ></Mobilemodal>
   </b-modal>
 
@@ -66,6 +46,7 @@
 import Card from '../components/Card'
 import Desktopmodal from '../components/Desktopmodal'
 import Mobilemodal from '../components/Mobilemodal'
+import moment from 'moment'
 
 export default {
   components:{
@@ -81,12 +62,20 @@ export default {
       },
       modalDesktopShow: false,
       modalMobileShow: false,
-      commentdataa: [
-        {author:"nyanyan",msg:"lolololoolo"},
-        {author:"arnoldi",msg:"so cute"},
-        {author:"itjoel",msg:"nice"},
-        {author:"mardi",msg:"wow!"}
-        ]
+      datas: [],
+      dataModal:{
+        imgLink: 'https://storage.googleapis.com/qmage/1573180391153-syahrini.jpg',
+        username: 'dipadana',
+        quote: "I love a lot of things, and I'm pretty much obsessive about most things I do, whether it be gardening, or architecture, or music. I'd be an obsessive hairdresser.",
+        date: "2019-11-08T02:33:15.649Z",
+        commentdataa: [
+    {
+      "_id": "5dc4d475c9b8600e5091ba5d",
+      "author": "panji",
+      "msg": "panji keren"
+    }
+  ]
+      }
     }
   },
   created() {
@@ -122,6 +111,10 @@ export default {
         this.showDesktopModal()
         this.hideMobileModal()
       }
+    },
+    getFormatDate(){
+      let date = this.dataModal.date
+      return moment(date).toNow()
     }
   },
   watch: {
