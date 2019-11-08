@@ -25,7 +25,7 @@ export default {
         maxFilesize: 1,
         maxFiles: 1,
         headers: { 
-          "Content-Type": "multipart/form-data",
+          // "Content-Type": "multipart/form-data",
           token: localStorage.getItem('token') 
         }
       },
@@ -42,13 +42,11 @@ export default {
     },
     vsuccess (file, response) {
       this.success = true
-      console.log(response);
-      this.$swal('success', response, 'success')
+      this.$swal('success', response.message, 'success')
     },
     verror (file) {
       this.error = true
-      console.log(file);
-      this.$swal('error', file, 'error')
+      this.$swal('error', 'something is wrong', 'error')
     }
   }
 };

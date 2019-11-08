@@ -50,6 +50,13 @@ export default {
       this.loginStatus = false
     }
   },
+  watch: {
+    loginStatus () {
+      if(this.loginStatus === true) {
+        this.changePage('home')
+      }
+    }
+  },
   created () {
     if(localStorage.getItem('token')){
       this.loginStatus = true
