@@ -10,7 +10,7 @@
           Upload
           <i class="fas fa-upload ml-1"></i>
         </b-button>
-        <b-button class="btn-sm ml-2" variant="light" @click="uploadForm">
+        <b-button class="btn-sm ml-2" variant="light" @click="toMyImage()">
           My Image
           <i class="far fa-image fa-lg ml-1"></i>
         </b-button>
@@ -38,6 +38,10 @@ export default {
   methods: {
     uploadForm() {
       this.$emit("showupload", "upload");
+    },
+    toMyImage() {
+      console.log("masuk")
+      this.$emit("showimage", "myimage")
     }
   }
 };
