@@ -1,13 +1,11 @@
 <template>
 
   <div>
-    <Navbar v-show="loginStatus" @showupload="changePage" @tohome="changePage" @backHome="changePage" @logout="logout" @searchtag="searchtag" @showimage="changePage"></Navbar>
-    <Home :keyword="keyword" v-show="page === 'home'" class="mt-md-5 mt-4" @tomyimage="changePage"></Home>
-    <UploadForm v-show="page === 'upload'"></UploadForm>
-    <Login @toregister="changePage" @logged-in="loggedIn" v-show="page === 'login'"></Login>
-    <Register @loginpage="changePage" @registered="registered" v-show="page === 'register'"></Register>
-    <MyImage v-show="page === 'myimage'"></MyImage>
-  </div>
+    <Navbar v-if="loginStatus" @showupload="changePage" @tohome="changePage" @backHome="changePage" @logout="logout" @searchtag="searchtag" @showimage="changePage"></Navbar>
+    <Home ref="home" :keyword="keyword" @emptykeyword="emptykeyword" v-if="page === 'home' && loginStatus" class="mt-md-5 mt-4" @tomyimage="changePage"></Home>
+    <UploadForm v-if="page === 'upload' && loginStatus"></UploadForm>
+    <MyImage v-if="page === 'myimage'"></MyImage>
+    <Login @toregister="changePage" @logged-in="loggedIn" v-if="page === 'login' && !loginStatus"></Login>  
 </template>
 
 <script>
@@ -21,7 +19,7 @@ export default {
   data() {
     return {
       page: "home",
-      loginStatus: !false,
+      loginStatus: false,
       keyword: ''
     };
   },
@@ -34,12 +32,23 @@ export default {
     MyImage
   },
   methods: {
+    emptykeyword () {
+      this.keyword = ''
+    },
     searchtag (tag) {
-      console.log(tag, 'DI APPP');
       this.keyword = tag
+      this.changePage('home')
     },
     changePage(arg) {
       // console.log("masuk");
+      if(this.page==='home' && arg === 'home'){
+        if(this.keyword.length>0){
+        this.$refs.home.fetchContent(this.keyword)
+        } else {
+          console.log('masukkkkkkkkkkkkkkkk lahhhhhhhh');
+        this.$refs.home.fetchContent()
+        }
+      }
       this.page = arg;
     },
     loggedIn(){
@@ -55,19 +64,15 @@ export default {
       this.loginStatus = false
     }
   },
-  watch: {
-    loginStatus () {
-      if(this.loginStatus === true) {
-        this.changePage('home')
-      }
-    }
-  },
   created () {
     if(localStorage.getItem('token')){
       this.loginStatus = true
+      this.changePage('home')
+    } else {
+      this.changePage('login')
     }
   }
-};
+}
 </script>
 <style>
 </style>

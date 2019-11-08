@@ -36,6 +36,7 @@ export default {
     searchByTag () {
       // console.log(this.tag);
       this.$emit('searchtag', this.tag)
+      this.tag = ''
     },
     uploadForm() {
       this.$emit("showupload", "upload");

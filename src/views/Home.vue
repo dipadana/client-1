@@ -84,7 +84,7 @@ export default {
   created() {
     window.addEventListener('resize', this.handleResize)
     this.handleResize();
-    if(this.keyword){
+    if(this.keyword.length >0){
       this.fetchContent(this.keyword)
     } else {
       this.fetchContent()
@@ -144,6 +144,7 @@ export default {
           this.$swal('error', 'No data found', 'error')
         }
         this.$swal.close()
+        this.$emit('emptykeyword')
 
       })
       .catch(({ response }) => {
@@ -170,12 +171,14 @@ export default {
     },
     trigerModal(id){
       this.selectedId = id
+      console.log("masuk trigger", this.window.width)
       this.fetchSingle()
       if(this.window.width <= 500){
         this.hideDesktopModal()
         this.showMobileModal()
       }
       else{
+        console.log('makkan nasi')
         this.showDesktopModal()
         this.hideMobileModal()
       }
@@ -187,15 +190,12 @@ export default {
   },
   watch: {
     'window.width':function(){
-      if(this.window.width < 500){
+      if(this.window.width <= 500){
         this.hideDesktopModal()
       }
       else{
         this.hideMobileModal()
       }
-    },
-    keyword () {
-      this.fetchContent(this.keyword)
     }
   }
 }

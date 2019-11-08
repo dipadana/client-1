@@ -1,5 +1,10 @@
 <template>
+<<<<<<< HEAD
   <b-container>
+=======
+  <b-container class="mt-3 mt-md-5">
+
+>>>>>>> 904107daecf9ce83d3014043fc2f59535268cf75
   <b-card-group columns>
     
     <Card
@@ -82,6 +87,7 @@ export default {
   created () {
     window.addEventListener('resize', this.handleResize)
     this.handleResize();
+    console.log('MASUK DI MYIMAGEEEEE');
     this.fetchContent()
   },
   destroyed() {
