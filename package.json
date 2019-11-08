@@ -21,8 +21,10 @@
     "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
     "bootstrap-vue": "^2.0.4",
+    "moment": "^2.24.0",
     "vue": "^2.6.10",
     "vue-hot-reload-api": "^2.3.4",
+    "vue-social-sharing": "^2.4.6",
     "vue2-dropzone": "^3.6.0"
   },
   "devDependencies": {

@@ -20,8 +20,8 @@ import Register from "./views/Register"
 export default {
   data() {
     return {
-      page: "login",
-      loginStatus: false
+      page: "home",
+      loginStatus: !false
     };
   },
   components: {

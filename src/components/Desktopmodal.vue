@@ -12,7 +12,24 @@
             <div class="comment-section overflow-auto">
               <h5 class="mt-3 mb-2 font-card-1"> <b>{{ username }}</b> </h5>
               <p class="font-card-2 mb-2"> {{ quote }} </p>
-              <p class="card-text font-card-1 mb-4"><small class="text-muted">{{ date }}</small></p>
+              <p class="card-text font-card-1 mb-4"><small class="text-muted">{{ date }} ago </small></p>
+              <social-sharing :url="imglink"
+              
+                      :title="quote"
+                      description="Intuitive, Fast and Composable MVVM for building interactive interfaces."
+                      :quote="quote"
+                      
+                      inline-template>
+                      <div>
+                <network network="facebook">
+                  <i class="fab fa-facebook-square"></i> Facebook
+                </network>  
+                <network network="twitter">
+                  <i class="fab fa-twitter-square ml-2"></i> Twitter
+                </network>  
+                </div>
+              </social-sharing>
+
               <hr class="border-secondary"/>
               <!-- Comment Section Here -->
               <div style="margin-top:30px">
