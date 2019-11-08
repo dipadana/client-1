@@ -2,7 +2,7 @@
 
   <div>
     <Navbar v-if="loginStatus" @showupload="changePage" @tohome="changePage" @backHome="changePage" @logout="logout" @searchtag="searchtag" @showimage="changePage"></Navbar>
-    <Home :keyword="keyword" v-if="page === 'home' && loginStatus" class="mt-md-5 mt-4" @tomyimage="changePage"></Home>
+    <Home ref="home" :keyword="keyword" @emptykeyword="emptykeyword" v-if="page === 'home' && loginStatus" class="mt-md-5 mt-4" @tomyimage="changePage"></Home>
     <UploadForm v-if="page === 'upload' && loginStatus"></UploadForm>
     <MyImage v-if="page === 'myimage'"></MyImage>
     <Login @toregister="changePage" @logged-in="loggedIn" v-if="page === 'login' && !loginStatus"></Login>  
@@ -32,11 +32,23 @@ export default {
     MyImage
   },
   methods: {
+    emptykeyword () {
+      this.keyword = ''
+    },
     searchtag (tag) {
       this.keyword = tag
+      this.changePage('home')
     },
     changePage(arg) {
       // console.log("masuk");
+      if(this.page==='home' && arg === 'home'){
+        if(this.keyword.length>0){
+        this.$refs.home.fetchContent(this.keyword)
+        } else {
+          console.log('masukkkkkkkkkkkkkkkk lahhhhhhhh');
+        this.$refs.home.fetchContent()
+        }
+      }
       this.page = arg;
     },
     loggedIn(){
@@ -51,8 +63,6 @@ export default {
       this.changePage('login')
       this.loginStatus = false
     }
-  },
-  watch: {
   },
   created () {
     if(localStorage.getItem('token')){

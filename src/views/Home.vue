@@ -84,7 +84,7 @@ export default {
   created() {
     window.addEventListener('resize', this.handleResize)
     this.handleResize();
-    if(this.keyword){
+    if(this.keyword.length >0){
       this.fetchContent(this.keyword)
     } else {
       this.fetchContent()
@@ -144,6 +144,7 @@ export default {
           this.$swal('error', 'No data found', 'error')
         }
         this.$swal.close()
+        this.$emit('emptykeyword')
 
       })
       .catch(({ response }) => {
@@ -195,9 +196,6 @@ export default {
       else{
         this.hideMobileModal()
       }
-    },
-    keyword () {
-      this.fetchContent(this.keyword)
     }
   }
 }
