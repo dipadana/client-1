@@ -1,5 +1,6 @@
 <template>
-  <b-navbar class="bg-dark" toggleable="lg" type="dark" variant="info">
+
+  <b-navbar class="bg-darker" toggleable="lg" type="dark" variant="info">
     <b-navbar-brand @click="backHome" class="ml-3">Qmage</b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
