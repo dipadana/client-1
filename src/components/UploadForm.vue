@@ -43,6 +43,7 @@ export default {
     vsuccess (file, response) {
       this.success = true
       this.$swal('success', response.message, 'success')
+      this.$refs.myVueDropzone.removeFile(file)
     },
     verror (file) {
       this.error = true
