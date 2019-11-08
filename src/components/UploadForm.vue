@@ -1,7 +1,7 @@
 <template>
   <div id="container">
     <i class="fas fa-download fa-5x"></i>
-    <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions"></vue-dropzone>
+    <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions" @vdropzone-success='vsuccess' @vdropzone-error="verror"></vue-dropzone>
     <button class="btn btn-danger" @click="removeAllFiles">Remove All Files</button>
     <button class="btn btn-info" @click="uploadFiles">Upload</button>
   </div>
@@ -18,14 +18,19 @@ export default {
   data: function() {
     return {
       dropzoneOptions: {
-        url: "http://localhost:3000/posts",
+        url: "http://localhost:3000/contents",
         method: "POST",
         autoProcessQueue: false,
         thumbnailWidth: 200,
         maxFilesize: 1,
         maxFiles: 1,
-        headers: { "Content-Type": "multipart/form-data" }
-      }
+        headers: { 
+          "Content-Type": "multipart/form-data",
+          token: localStorage.getItem('token') 
+        }
+      },
+      success: false,
+      error: false
     };
   },
   methods: {
@@ -34,6 +39,16 @@ export default {
     },
     uploadFiles() {
       this.$refs.myVueDropzone.processQueue();
+    },
+    vsuccess (file, response) {
+      this.success = true
+      console.log(response);
+      this.$swal('success', response, 'success')
+    },
+    verror (file) {
+      this.error = true
+      console.log(file);
+      this.$swal('error', file, 'error')
     }
   }
 };

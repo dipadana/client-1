@@ -18,7 +18,7 @@
         <b-button
           class="btn-sm ml-0 ml-md-2 mt-2 mt-md-0"
           variant="danger"
-          @click="uploadForm"
+          @click="logout"
         >Logout</b-button>
       </b-navbar-nav>
 
@@ -45,6 +45,9 @@ export default {
     },
     backHome() {
       this.$emit("backHome", "home");
+    },
+    logout () {
+      this.$emit('logout')
     }
   }
 };

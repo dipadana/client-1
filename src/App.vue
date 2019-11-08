@@ -1,11 +1,11 @@
 <template>
 
   <div>
-    <Navbar v-show="loginStatus" @showupload="changePage" @backHome="changePage"></Navbar>
+    <Navbar v-show="loginStatus" @showupload="changePage" @backHome="changePage" @logout="logout"></Navbar>
     <Home v-show="page === 'home'" class="mt-md-5 mt-4"></Home>
     <UploadForm v-show="page === 'upload'"></UploadForm>
-    <Login @toregister="changePage" v-show="page === 'login'"></Login>
-    <Register @loginpage="changePage" v-show="page === 'register'"></Register>
+    <Login @toregister="changePage" @logged-in="loggedIn" v-show="page === 'login'"></Login>
+    <Register @loginpage="changePage" @registered="registered" v-show="page === 'register'"></Register>
 
   </div>
 </template>
@@ -34,8 +34,25 @@ export default {
   methods: {
 
     changePage(arg) {
-      console.log("masuk");
+      // console.log("masuk");
       this.page = arg;
+    },
+    loggedIn(){
+      this.loginStatus = true
+      this.changePage('home')
+    },
+    registered () {
+      this.changePage("login")
+    },
+    logout () {
+      localStorage.clear()
+      this.changePage('login')
+      this.loginStatus = false
+    }
+  },
+  created () {
+    if(localStorage.getItem('token')){
+      this.loginStatus = true
     }
   }
 };
