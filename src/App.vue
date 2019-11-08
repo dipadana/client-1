@@ -1,10 +1,7 @@
 <template>
   <div>
-  
     <Navbar></Navbar>
-
     <Home v-show="page == 'home'" class="mt-md-5 mt-4"></Home>
-
   </div>
 </template>
 
@@ -24,9 +21,3 @@ export default {
   }
 }
 </script>
-
-<style>
-@import url('https://fonts.googleapis.com/css?family=McLaren&display=swap')
-
-
-</style>
