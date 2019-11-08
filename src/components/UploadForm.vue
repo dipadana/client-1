@@ -79,5 +79,8 @@ export default {
     padding-top: 90px;
     padding-bottom: 0px;
   }
+  .dz-preview.dz-image-preview {
+    margin-left: 0px;
+  }
 }
 </style>
