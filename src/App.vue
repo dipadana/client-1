@@ -3,7 +3,7 @@
   
     <Navbar></Navbar>
 
-    <Home v-show="page == 'home'"></Home>
+    <Home v-show="page == 'home'" class="mt-md-5 mt-4"></Home>
 
   </div>
 </template>
